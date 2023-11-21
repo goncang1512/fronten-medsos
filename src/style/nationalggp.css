@@ -1,0 +1,86 @@
+.subscribe-main:before {
+    position: absolute;
+    background-color: rgb(255, 200, 0);
+    height: 2px;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    transition: 80ms;
+    overflow-y: hidden;
+}
+
+.subscribe-main:hover:before{
+    height: 100%;
+    color: black;
+}
+
+.subs-navbar:after {
+    content: "SUBSCRIBE";
+    position: absolute;
+    background-color: rgb(255, 200, 0);
+    height: 100%;
+    width: 0px;
+    left: 0;
+    top: 0;
+    transition: 90ms;
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.subs-navbar:hover:after {
+    width: 100%;
+    color: black;
+}
+
+.title-hits:before {
+    content: "";
+    position: absolute;
+    background-color: rgb(255, 200, 0);
+    height: 50%;
+    width: 5px;
+    bottom: 10px;
+    left: -6px;
+}
+
+.judul-gambar h1, .judul-gambar p {
+    text-shadow: 8px 6px 10px black;
+}
+
+.see-more:before {
+    content: 'SEE MORE';
+}
+
+.stream-now:before {
+    content: 'STREAM NOW';
+}
+
+.teks-judul:after {
+    content: "";
+    position: absolute;
+    background-color: rgb(255, 200, 0);
+    height: 4px;
+    width: 12%;
+    bottom: -20px;
+    left: 50%;
+}
+
+.hover-profil{
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+}
+
+.profil-user:hover + .hover-profil {
+    opacity: 1;
+    visibility: visible;
+    display: flex;
+    transition-delay: 0.4s;
+}
+
+.hover-profil:hover {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+}
