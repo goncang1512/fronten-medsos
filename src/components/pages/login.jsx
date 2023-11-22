@@ -5,6 +5,7 @@ import {AiOutlineEyeInvisible, AiOutlineEye} from 'react-icons/ai'
 
 export default function Login() {
     const navigate = useNavigate()
+    const url = import.meta.env.VITE_REACT_APP_BASE_URL
     const [seePassword, setSeePassword] = useState(false)
     const [message, setMessage] = useState('')
     const [data, setData] = useState({
@@ -15,7 +16,7 @@ export default function Login() {
     const handleLogin = async (e) => {
         e.preventDefault()
         try {
-            await axios.post("http://localhost:3000/login", data)
+            await axios.post(`${url}/login`, data)
             navigate('/profil')
         } catch(err) {
             if(err.response) {

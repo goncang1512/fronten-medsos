@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 
 export default function EditContent() {
+    const url = import.meta.env.VITE_REACT_APP_BASE_URL
     const navigate = useNavigate()
     const { id } = useParams()
     const [message, setMessage] = useState('')
@@ -26,7 +27,7 @@ export default function EditContent() {
         try {
             const confirmation = window.confirm("Anda yakin ingin edit content?");
             if(confirmation) {
-                await axios.patch(`http://localhost:3000/content/${id}`, formData, {
+                await axios.patch(`${url}/content/${id}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
@@ -46,7 +47,7 @@ export default function EditContent() {
     useEffect(() => {
         const getContentById = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/content/${id}`)
+                const response = await axios.get(`${url}/content/${id}`)
                 console.log(response.data)
                 const contentData = response.data
                 setCeption(contentData.ception)

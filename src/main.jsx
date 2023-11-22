@@ -9,12 +9,13 @@ import Register from './components/pages/register.jsx'
 import Login from './components/pages/login.jsx'
 import Profil from './components/pages/profil.jsx'
 import Upload from './components/pages/upload.jsx'
-import Explore from './components/pages/explore.jsx'
+import HomePage from './components/pages/homePage.jsx'
 import EditProfil from './components/pages/editProfil.jsx'
 import EditContent from './components/pages/editContent.jsx'
 import Setting from './components/pages/setting.jsx'
 import Chat from './components/pages/chat.jsx'
 import UserProfil from './components/pages/userProfil.jsx'
+import Explore from './components/pages/explore.jsx'
 import './index.css'
 import axios from 'axios'
 
@@ -22,7 +23,11 @@ axios.defaults.withCredentials = true
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
+    element: <HomePage/>
+  },
+  {
+    path: "/landingPage",
     element: <Geographic/>,
   },
   {
@@ -42,10 +47,6 @@ const router = createBrowserRouter([
     element: <Upload/>
   }, 
   {
-    path: '/explore',
-    element: <Explore/>
-  },
-  {
     path: '/editprofil/:id',
     element: <EditProfil/>
   }, 
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
   {
     path: '/userprofil/:id',
     element: <UserProfil/>
+  }, 
+  {
+    path: '/explore',
+    element: <Explore/>
   }
 ]);
 

@@ -5,14 +5,15 @@ import { useParams, useNavigate } from 'react-router-dom'
 import '../../style/nationalggp.css'
 
 export default function Setting() {
+    const url = import.meta.env.VITE_REACT_APP_BASE_URL
     const {id} = useParams()
     const navigate = useNavigate()
 
     const handleDeleteAkun = async () => {
         try {
-            const confirmation = window.confirm("Anda yakin ingin hapus akun?");
+            const confirmation = window.confirm("Anda yakin ingin hapus akun?")
             if (confirmation) {
-                await axios.delete(`http://localhost:3000/user/${id}`)
+                await axios.delete(`${url}/user/${id}`)
                 navigate('/')
             } else {
                 navigate('/profil')
@@ -26,7 +27,7 @@ export default function Setting() {
         try {
             const confirmed = window.confirm("Anda yakin ingin hapus akun?");
             if (confirmed) {
-                await axios.delete('http://localhost:3000/logout')
+                await axios.delete(`${url}/logout`)
                 navigate('/explore')
             } else {
                 navigate("/profil")
@@ -35,8 +36,6 @@ export default function Setting() {
             console.log(err)
         }
     }
-
-    const [seeMore, setSeeMore] = useState(false)
 
     return (
         <div>

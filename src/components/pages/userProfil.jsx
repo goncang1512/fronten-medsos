@@ -7,6 +7,7 @@ import { IoCloseSharp } from "react-icons/io5"
 
 
 export default function UserProfil() {
+    const url = import.meta.env.VITE_REACT_APP_BASE_URL
     const { id } = useParams()
     const [userData, setUserData] = useState('')
 
@@ -16,7 +17,7 @@ export default function UserProfil() {
 
     const userProfil = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/user/${id}`)
+            const response = await axios.get(`${url}/user/${id}`)
             setUserData(response.data.getUser)
         } catch(err) {
             console.log(err)
@@ -39,14 +40,14 @@ export default function UserProfil() {
                             <p className='text-md'>{userData.email}</p>
                         </div>
                     </div>
-                <UserContent userId={userData.id}/>
+                <UserContent userId={userData.id} url={url}/>
                 </div>
             </main>
         </div>
     )
 }
 
-const UserContent = ({userId}) => {
+const UserContent = ({userId, url}) => {
     const [userConten, setUserContent] = useState('')
     const [selectedContent, setSelectedContent] = useState([])
 
@@ -56,7 +57,7 @@ const UserContent = ({userId}) => {
 
     const contentUser = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/content')
+            const response = await axios.get(`${url}/content`)
             const filteredContent = response.data.filter(content => content.id_user === userId)
             console.log(filteredContent)
             setUserContent(filteredContent)
@@ -77,24 +78,13 @@ const UserContent = ({userId}) => {
                 <img src={`${content.url}`} alt={content.user.username} className='w-[309px] h-[309px] object-cover border cursor-pointer' onClick={()=> handleModal(content) }/>
             </div>
             ))}
-            <ShowContent selectedContent={selectedContent} fetchMyContent={contentUser}/>
+            <ShowContent selectedContent={selectedContent}/>
         </div>
     )
 }
 
 
-const ShowContent = ({selectedContent, fetchMyContent}) => {
-
-    const handleDelete = async () => {
-        try {
-            await axios.delete(`http://localhost:3000/content/${selectedContent.id}`)
-            fetchMyContent()
-            document.getElementById('my_modal_3').close();
-        } catch (err) {
-            console.log(err);
-        }
-    }
-    
+const ShowContent = ({selectedContent}) => {
     const closeModal = () => {
         document.getElementById('my_modal_3').close()
     }

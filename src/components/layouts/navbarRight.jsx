@@ -31,8 +31,8 @@ export default function NavbarRight() {
         <div className='fixed border-r md:flex hidden flex-col flex-2 w-56 h-screen bg-white'>
             <div className='pt-10 pl-10 text-2xl font-bold'>Goncang Medsos</div>
             <ul className='w-full flex flex-col items-start h-full justify-evenly font-medium pl-10'>
-                <li><a href="/" className='flex items-center gap-2'> <GoHome size={"25"}/> Home</a></li>
-                <li><a href="/explore" className='flex items-center gap-2'> <MdOutlineExplore size={"25"}/>Jelajahi</a></li>
+                <li><a href="/" className='flex items-center gap-2'><GoHome size={"25"}/> Home</a></li>
+                <li><a href="/explore" className='flex items-center gap-2'><MdOutlineExplore size={"25"}/> Jelajahi</a></li>
                 {auth ? (
                     <>
                         <li><a href="/chat" className='flex items-center gap-2'> <IoChatbubbleOutline size={"25"}/> Chat</a></li>

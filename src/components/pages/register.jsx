@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import {AiOutlineEyeInvisible, AiOutlineEye} from 'react-icons/ai'
 
 export default function Register() {
+    const url = import.meta.env.VITE_REACT_APP_BASE_URL
     const [data, setData] = useState({
         username: '',
         email: '',
@@ -34,7 +35,7 @@ export default function Register() {
         formData.append('confPassword', data.confPassword)
         formData.append('fotoProfil', data.fotoProfil)
         try {
-            await axios.post("http://localhost:3000/user", formData, {
+            await axios.post(`${url}/user`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

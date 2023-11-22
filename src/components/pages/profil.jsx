@@ -8,8 +8,8 @@ import { IoMdSettings } from "react-icons/io"
 import { GoPlus } from "react-icons/go"
 
 export default function profil() {
+    const url = import.meta.env.VITE_REACT_APP_BASE_URL
     const [user, setUser] = useState('')
-    const [token, setToken] = useState('')
     const [expire, setExpire] = useState('')
     const navigate = useNavigate()
 
@@ -19,8 +19,7 @@ export default function profil() {
 
     const refreshToken = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/token')
-            setToken(response.data.accessToken)
+            const response = await axios.get(`${url}/token`)
             const decoded = jwtDecode(response.data.accessToken)
             setUser(decoded)
             setExpire(decoded.exp)
@@ -33,9 +32,8 @@ export default function profil() {
     axiosJWT.interceptors.request.use(async (config) => {
         const currentDate = new Date()
         if(expire * 1000 < currentDate.getTime()){
-            const response = await axios.get('http://localhost:3000/token')
+            const response = await axios.get(`${url}/token`)
             config.headers.Authorization = `Bearer ${response.data.accessToken}`
-            setToken(response.data.accessToken)
             const decoded = jwtDecode(response.data.accessToken)
             setUser(decoded)
             setExpire(decoded.exp)
@@ -69,20 +67,20 @@ export default function profil() {
                             <p>upload</p>
                         </div>
                     </div>
-                    <MyContent userId={user.id} />
+                    <MyContent userId={user.id} url={url} />
                 </div>
             </main>
         </div>
     )
 }
 
-const MyContent = ({userId}) => {
+const MyContent = ({userId, url}) => {
     const [myContent, setMyContent] = useState([])
     const [selectedContent, setSelectedContent] = useState([])
 
     const fetchMyContent = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/content`)
+            const response = await axios.get(`${url}/content`)
             const filteredContent = response.data.filter(content => content.id_user === userId)
             setMyContent(filteredContent)
         } catch (err) {
@@ -106,18 +104,22 @@ const MyContent = ({userId}) => {
                 <img src={`${content.url}`} alt={content.user.username} className='w-[309px] h-[309px] object-cover border cursor-pointer' onClick={()=> handleModal(content) }/>
             </div>
             ))}
-            <ShowContent selectedContent={selectedContent} fetchMyContent={fetchMyContent}/>
+            <ShowContent selectedContent={selectedContent} fetchMyContent={fetchMyContent} url={url}/>
         </div>
     )
 }
 
-const ShowContent = ({selectedContent, fetchMyContent}) => {
-
+const ShowContent = ({selectedContent, fetchMyContent, url}) => {
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:3000/content/${selectedContent.id}`)
-            fetchMyContent()
-            document.getElementById('my_modal_3').close();
+            const confirmation = window.confirm("Anda yakin ingin hapus akun?")
+            if (confirmation) {
+                await axios.delete(`${url}/content/${selectedContent.id}`)
+                fetchMyContent()
+                closeModal()
+            } else {
+                closeModal()
+            }
         } catch (err) {
             console.log(err);
         }
@@ -134,7 +136,7 @@ const ShowContent = ({selectedContent, fetchMyContent}) => {
                     <a className="cursor-pointer text-3xl flex items-center justify-center border-0 absolute right-0 text-2xl m-5 text-white" onClick={closeModal}><IoCloseSharp/></a>
                 </form>
                 <main className='flex items-center justify-center h-screen w-screen px-[200px] py-[100px]'>
-                    <div className='w-full h-full'>
+                    <div className='w-full h-full border-r'>
                         <img src={`${selectedContent.url}`} alt="" className='w-full h-full object-cover'/>
                     </div>
                     <div className='w-1/2 bg-white h-full p-5 flex flex-col justify-between'>

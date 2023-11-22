@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 
 export default function Upload() {
@@ -9,6 +9,7 @@ export default function Upload() {
     const [id_user, setId_user] = useState(id)
     const [ception, setCeption] = useState('')
     const [imageContent, setImageContent] = useState('')
+    const url = import.meta.env.VITE_REACT_APP_BASE_URL
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -26,7 +27,7 @@ export default function Upload() {
         formData.append('imageContent', imageContent)
         formData.append('ception', ception)
         try {
-            await axios.post("http://localhost:3000/content", formData, {
+            await axios.post(`${url}/content`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -52,7 +53,7 @@ export default function Upload() {
                 <p className='text-red-500 text-center'>{message}</p>
                 <label  className="gap-2 flex flex-col">
                     Ception:
-                    <textarea name="ception" id="ception" cols="30" rows="10" className='border rounded-lg p-2' onChange={(e) => setCeption(e.target.value)} required></textarea>
+                    <textarea name="ception" id="ception" cols="30" rows="10" className='border rounded-lg p-2 max-h-[400px] min-h-[42px]' onChange={(e) => setCeption(e.target.value)} required></textarea>
                 </label>
                 <label className="gap-2 flex flex-col">
                     Content :

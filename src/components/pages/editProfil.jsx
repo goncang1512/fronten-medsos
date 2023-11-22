@@ -5,6 +5,7 @@ import {AiOutlineEyeInvisible, AiOutlineEye} from 'react-icons/ai'
 
 
 export default function EditProfil() {
+    const url = import.meta.env.VITE_REACT_APP_BASE_URL
     const { id } = useParams()
     const [message, setMessage] = useState('')
     const [seePassword, setSeePassword] = useState(false)
@@ -36,7 +37,7 @@ export default function EditProfil() {
         try {
             const confirmation = window.confirm("Anda yakin ingin edit akun?")
             if (confirmation) {
-                await axios.patch(`http://localhost:3000/user/${id}`, formData, {
+                await axios.patch(`${url}/user/${id}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
@@ -56,7 +57,7 @@ export default function EditProfil() {
     useEffect(() => {
         const getUserById = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/user/${id}`)
+                const response = await axios.get(`${url}/user/${id}`)
                 const resData = response.data.getUser
                 setUsername(resData.username)
                 setEmail(resData.email)
